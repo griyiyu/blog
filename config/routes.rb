@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  
   get 'users/new'
-
+  resources :users
+  
   resources :posts do
     resources :comments
   end
