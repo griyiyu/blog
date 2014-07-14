@@ -3,12 +3,12 @@ class SessionsController < ApplicationController
   end
  
   def create
-    password_hash = Digest::MD5.digest(params[:password_hash]).force_encoding("utf-8")
-    if user = User.where({email: params[:username], password_hash: password_hash})
-      session[:current_user_id] = user.user_id
+    user = User.authenticate(params[:email], params[:password_hash])
+    if user 
+      session[:current_user_id] = user.id
       redirect_to posts_path
     else
-      render 'new'
+      render :action => "sign_in"
     end
   end
  
