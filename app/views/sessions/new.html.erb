@@ -1,0 +1,10 @@
+<%= form_for(:session, url: sessions_path) do |f| %>
+ 
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+ 
+  <%= f.label :password_hash %>
+  <%= f.password_field :password_hash %>
+ 
+  <%= f.submit "Iniciar sesión" %>
+<% end %>
