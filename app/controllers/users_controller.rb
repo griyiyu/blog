@@ -7,7 +7,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.save
-    redirect_to users_path
+    flash[:notice] = 'User successfully created.'
+    redirect_to signin_path
   end
   
   
