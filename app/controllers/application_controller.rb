@@ -7,8 +7,11 @@ class ApplicationController < ActionController::Base
   
   protected
   def authenticate
-    @_current_user ||= session[:current_user_id] &&
-    User.find_by(id: session[:current_user_id])
+    unless (session[:current_user_id])
+      if (params[:controller] != "sessions" && params[:controller] != "users")
+        redirect_to signin_path
+      end
+    end
   end
   
 end

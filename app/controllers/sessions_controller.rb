@@ -3,19 +3,23 @@ class SessionsController < ApplicationController
   end
  
   def create
-    user = User.authenticate(params[:email], params[:password_hash])
-    if user 
-      session[:current_user_id] = user.id
+    @current_user = User.authenticate(user_params[:email], user_params[:password_hash])
+    if @current_user 
+      session[:current_user_id] = @current_user.id
       redirect_to posts_path
     else
-      render :action => "sign_in"
+      redirect_to signin_path
     end
   end
  
   def destroy
-    # Remove the user id from the session
-    @_current_user = session[:current_user_id] = nil
-    redirect_to users_new
+    @current_user = session[:current_user_id] = nil
+    redirect_to signin_path
+  end
+  
+  private
+  def user_params
+    params.require(:user).permit(:email, :password_hash)
   end
   
 end
